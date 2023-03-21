@@ -1,0 +1,179 @@
+basePath: /public
+definitions:
+  model.TErrorResponse:
+    properties:
+      errors: {}
+    type: object
+  model.TSuccessResponse:
+    properties:
+      data: {}
+    type: object
+  public.TErrLatestEarthquake:
+    properties:
+      code:
+        description: kode error untuk dikirimkan ke pengelola
+        type: integer
+    type: object
+  public.TErrTAWiki:
+    properties:
+      code:
+        description: kode error untuk dikirimkan ke pengelola
+        type: integer
+      message:
+        description: pesan error untuk dikirimkan ke pengelola
+        type: string
+    type: object
+  public.TInfoEarthquake:
+    properties:
+      affected:
+        description: affected
+        type: string
+      coordinates:
+        description: koordinat
+        type: string
+      depth:
+        description: meter
+        type: integer
+      information:
+        description: information
+        type: string
+      latitude:
+        description: garis lintang
+        type: number
+      longitude:
+        description: garis bujur
+        type: number
+      magnitude:
+        description: magnitudo (SR)
+        type: number
+      time:
+        description: unix timestamp (utc)
+        type: integer
+    type: object
+  public.TInfoTAWiki:
+    properties:
+      id:
+        description: urutan
+        type: integer
+      tahukah_anda:
+        description: informasi
+        type: string
+    type: object
+  public.TResLatestEarthquake:
+    properties:
+      info:
+        allOf:
+        - $ref: '#/definitions/public.TInfoEarthquake'
+        description: latest earthquake information
+      peta_gempa:
+        description: latest earthquake map
+        type: string
+    type: object
+  public.TResTAWiki:
+    properties:
+      image_link:
+        description: tautan gambar (opsional)
+        type: string
+      info:
+        description: data "tahukah anda"
+        items:
+          $ref: '#/definitions/public.TInfoTAWiki'
+        type: array
+    type: object
+host: cinnabar.icaksh.my.id
+info:
+  contact:
+    email: me@icaksh.my.id
+    name: Cinnabar REST API Support
+    url: https://cinnabar.icaksh.my.id/
+  description: |-
+    # Introduction (OpenAPI Specification)
+    Cinnabar Public REST API merupakan API publik yang tersedia untuk umum dan dapat digunakan secara gratis. Dokumentasi API ini merupakan dokumentasi Cinnabar REST API untuk publik. Apabila anda ingin melihat dokumentasi Cinnabar REST API yang privat, silakan menuju tautan [Cinnabar Private REST API -  Documentation](https://cinnabar.icaksh.my.id/private/docs).
+    API ini didokumentasikan dalam bentuk **OpenAPI format** dan didasarkan pada [swagger.io](https://swagger.io). Halaman dokumentasi ini digenerate dengan menggunakan [swaggo](https://github.com/swaggo/swag) dan dipublikasikan menggunakan [redoc](https://github.com/Redocly/redoc).
+    # Cross-Origin Resource Sharing
+    API ini memiliki fitur Cross-Origin Resource Sharing (CORS) yang diterapkan sesuai dengan [spesifikasi W3C](https://www.w3.org/TR/cors/) dan memungkinkan komunikasi lintas domain. Semua response bersifat publik dan dapat diakses oleh semua orang dari aplikasi apapun ataupun website apapun.
+    # Information
+    API ini masih dalam tahap pengembangan. Apabila anda ingin memberikan saran terhadap pengembangan API ini, silakan hubungi alamat pos-el yang telah tersedia. Jangan sungkan untuk menghubungi alamat pos-el jika terjadi error.
+    # Donation
+    Pada dasarnya anda dapat menggunakan REST API ini secara gratis. Perlu diketahui bahwa Cinnabar Public REST API di-deploy di Google Cloud Run Free Tier dan hingga saat ini biaya yang dikeluarkan hanya terfokus pada pembelian bandwith ke Indonesia (sekitar Rp1500/GB) sehingga kami tidak membuka donasi dan kami harap anda tidak melakukan hal yang mengakibatkan tingginya bandwith keluar.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: Cinnabar Public REST API
+  version: BETA
+  x-logo:
+    altText: Cinnabar REST API
+    backgroundColor: '#ffffff'
+    url: https://cinnabar.icaksh.my.id/view/logo.png
+paths:
+  /daily/tawiki:
+    get:
+      description: 'Sumber: Wikipedia Bahasa Indonesia'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/public.TResTAWiki'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/public.TErrTAWiki'
+      summary: Wikipedia - Tahukah Anda
+      tags:
+      - information
+  /latest/gempa:
+    get:
+      description: 'Sumber: Badan Meteorologi, Klimatologi, dan Geofisika Republik
+        Indonesia'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/public.TResLatestEarthquake'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/public.TErrLatestEarthquake'
+      summary: BMKG - Gempa Terbaru
+      tags:
+      - information
+  /test:
+    get:
+      description: Cinnabar REST API JSON Format
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.TErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.TErrorResponse'
+      summary: REST - Response
+      tags:
+      - basic
+swagger: "2.0"
+tags:
+- name: basic
+- description: API untuk mendapatkan suatu informasi seperti fakta unik, berita terkini,
+    atau informasi darurat seperti gempa bumi
+  name: informasi
+- description: API yang masih dalam tahap pengembangan
+  name: beta
+x-tagGroups:
+- name: API
+  tags:
+  - basic
+- name: Daily
+  tags:
+  - information

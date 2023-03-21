@@ -1,0 +1,87 @@
+basePath: /public
+definitions:
+  model.TApiKey:
+    properties:
+      api_key:
+        type: string
+      owner:
+        type: string
+      quota:
+        type: integer
+    type: object
+  model.TSuccessResponse:
+    properties:
+      data: {}
+    type: object
+host: cinnabar.icaksh.my.id
+info:
+  contact:
+    email: me@icaksh.my.id
+    name: Cinnabar REST API Support
+    url: https://cinnabar.icaksh.my.id/
+  description: |-
+    # Introduction (OpenAPI Specification)
+    Cinnabar Private REST API merupakan API private yang tersedia untuk umum dan dapat digunakan secara secara berbayar. Dokumentasi API ini merupakan dokumentasi Cinnabar REST API untuk privat. Apabila anda ingin melihat dokumentasi Cinnabar REST API yang privat, silakan menuju tautan [Cinnabar Public REST API -  Documentation](https://cinnabar.icaksh.my.id/public/docs).
+    API ini didokumentasikan dalam bentuk **OpenAPI format** dan didasarkan pada [swagger.io](https://swagger.io). Halaman dokumentasi ini digenerate dengan menggunakan [swaggo](https://github.com/swaggo/swag) dan dipublikasikan menggunakan [redoc](https://github.com/Redocly/redoc).
+    # Cross-Origin Resource Sharing
+    API ini memiliki fitur Cross-Origin Resource Sharing (CORS) yang diterapkan sesuai dengan [spesifikasi W3C](https://www.w3.org/TR/cors/) dan memungkinkan komunikasi lintas domain. Semua response bersifat publik dan dapat diakses oleh semua orang dari aplikasi apapun ataupun website apapun.
+    # Information
+    API ini masih dalam tahap pengembangan. Apabila anda ingin memberikan saran terhadap pengembangan API ini, silakan hubungi alamat pos-el yang telah tersedia. Jangan sungkan untuk menghubungi alamat pos-el jika terjadi error
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: Cinnabar Private REST API
+  version: BETA
+  x-logo:
+    altText: Cinnabar REST API
+    backgroundColor: '#ffffff'
+    url: https://cinnabar.icaksh.my.id/view/logo.png
+paths:
+  /api/info:
+    post:
+      consumes:
+      - application/json
+      description: Check your API Information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TApiKey'
+      security:
+      - apikey: []
+      summary: REST - Api Information
+      tags:
+      - basic
+  /api/test:
+    post:
+      consumes:
+      - application/json
+      description: Cinnabar REST API JSON Format
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TSuccessResponse'
+      security:
+      - apikey: []
+      summary: REST - Response
+      tags:
+      - basic
+securityDefinitions:
+  apikey:
+    description: For this sample, you can use the api key `special-key` to test the
+      authorization filters.
+    in: header
+    name: apikey
+    type: apiKey
+swagger: "2.0"
+tags:
+- name: basic
+x-tagGroups:
+- name: API
+  tags:
+  - basic

@@ -1,0 +1,9 @@
+This is a free REST API developed in Golang,designed with the 
+MVC (Model-View-Controller) concept similar to CodeIgniter 4 in PHP,
+but applied to Golang for efficiency and performance.
+
+The copyright holder grant the freedom
+to copy, modify, convey, adapt, and/or redistribute this work
+under the terms of the Massachusets Institute of Technology.
+
+Palguno Wicaksono <hello@icaksh.my.id>
